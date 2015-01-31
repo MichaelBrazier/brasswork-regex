@@ -1,0 +1,80 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>Brasswork Regex User's Manual</title>
+      <link rel="stylesheet" type="text/css" href="manual.css">
+   </head>
+   <body>
+      <ul id="toc">
+         <h1>Brasswork Regex<br/>User's Manual</h1>
+	     <b>Top</b>
+         <li><a href="apiref.html">Regular Expression API</a>
+            <ul>
+               <li><a href="apiref.html#Regex">Regex Class</a></li>
+               <li><a href="apiref.html#MatchEvaluator">MatchEvaluator Delegate</a></li>
+               <li><a href="apiref.html#RegexOptions">RegexOptions Enumeration</a></li>
+               <li><a href="apiref.html#Match">Match Class</a></li>
+               <li><a href="apiref.html#MatchCollection">MatchCollection Class</a></li>
+               <li><a href="apiref.html#MatchEnumerator">MatchCollection.Enumerator Class</a></li>
+               <li><a href="apiref.html#Match.Group">Match.Group Class</a></li>
+               <li><a href="apiref.html#Match.GroupCollection">Match.GroupCollection Class</a></li>
+               <li><a href="apiref.html#Match.GroupEnumerator">Match.GroupCollection.Enumerator Class</a></li>
+            </ul>
+         </li>
+         <li><a href="syntax.html">Regular Expression Syntax</a>
+            <ul>
+               <li><a href="syntax.html#charesc">Characters and Character Escapes</a></li>
+               <li><a href="syntax.html#charclass">Character Classes</a></li>
+               <li><a href="syntax.html#boundaries">Boundaries</a></li>
+               <li><a href="syntax.html#grouping">Operators and Grouping</a></li>
+               <li><a href="syntax.html#quants">Quantifiers</a></li>
+               <li><a href="syntax.html#misc">Miscellaneous Constructs</a></li>
+            </ul>
+         </li>
+         <li><a href="tables.html">Tables of Unicode Properties</a>
+            <ul>
+               <li><a href="tables.html#properties">Unicode Properties</a></li>
+               <li><a href="tables.html#categories">General Categories</a></li>
+               <li><a href="tables.html#blocks">Named Blocks</a></li>
+               <li><a href="tables.html#scripts">Scripts</a></li>
+            </ul>
+         </li>
+      </ul>
+
+      <p>Brasswork Regex is a Unicode-aware regular expression package for the .NET platform. It recognizes the <a href="#Unicode7">Unicode 7.0.0</a> character set. It conforms to the following requirements of <a href="#UTS18">Unicode Technical Standard #18</a>: "Unicode Regular Expressions", Version 17:</p>
+	  <ul>
+		<li>RL1.1 Hex Notation</li>
+		<li>RL1.2 Properties</li>
+		<li>RL1.3 Subtraction and Intersection</li>
+		<li>RL1.4 Simple Word Boundaries</li>
+		<li>RL1.5 Simple Loose Matches</li>
+		<li>RL1.6 Line Boundaries</li>
+		<li>RL1.7 Supplementary Code Points</li>
+		<li>RL2.3 Default Word Boundaries</li>
+	  </ul>
+	  <p>Brasswork Regex is based on Valentin Antimirov's NFA construction algorithm, detailed in his <a href="#Antimirov1995">1995 paper</a> "Partial Derivatives of Regular Expressions and Finite Automata Constructions". However, it extends that algorithm to intersections and complements of regular expressions, following a <a href="#Bastos2013">2013 technical report</a> by Rafaela Bastos, Nelma Moreira, and Rogério Reis.</p>
+
+      <h2>Notices</h2>
+      <p>Brasswork Regex is Copyright © 2010, 2015 Michael D. Brazier.</p>
+      <p>Brasswork Regex is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
+      <p>Brasswork Regex is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.</p>
+      <p>A copy of the GNU <a href="gpl.txt">General Public License</a> and <a href="lgpl.txt">Lesser General Public License</a> should be included with this documentation; or you may obtain a copy at <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.</p>
+      <p>The test suite of Brasswork Regex uses NUnit 2.5 or any later version (<a href="http://www.nunit.org/">http://www.nunit.org/</a>). NUnit is Copyright © 2002-2009 Charlie Poole or Copyright © 2002-2004 James W. Newkirk, Michael C. Two, Alexei A. Vorontsov or Copyright © 2000-2002 Philip A. Craig.</p>
+      <p>Most of the test cases were taken from the test suite of the PCRE library (<a href="http://www.pcre.org/">http://www.pcre.org/</a>). PCRE is Copyright © 1997-2009 University of Cambridge.</p>
+
+      <h2>References</h2>
+      <p><a name="Antimirov1995"></a>Antimirov, Valentin. Partial Derivatives of Regular Expressions and Finite Automata Constructions. Theoretical Computer Science,
+         Volume 155, Number 2, pages 291-319.<br>
+	  <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.56.2509">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.56.2509</a></p>
+	  <p><a name="Bastos2013"></a>Rafaela Bastos, Nelma Moreira, and Rogério Reis. Manipulation of Extended Regular Expressions with Derivatives, Technical Report DCC-2013-11, DCC - FC & CMUP, Universidade do Porto, September, 2013.<br>
+	  <a href="http://www.dcc.fc.up.pt/dcc/Pubs/TReports/TR13/dcc-2013-11.pdf">http://www.dcc.fc.up.pt/dcc/Pubs/TReports/TR13/dcc-2013-11.pdf</a></p>
+      <p><a name="Unicode7"></a>The Unicode Consortium. The Unicode Standard, Version 7.0.0, (Mountain View, CA: The Unicode Consortium, 2014. ISBN 978-1-936213-09-2)<br>
+	  <a href="http://www.unicode.org/versions/Unicode7.0.0/">http://www.unicode.org/versions/Unicode7.0.0/</a></p>
+      <p><a name="UAX29"></a>Unicode Standard Annex #29, "Unicode Text Segmentation," Version 25, by Mark Davis.<br>
+	  <a href="http://www.unicode.org/reports/tr29/tr29-25.html">http://www.unicode.org/reports/tr29/tr29-25.html</a>
+      <p><a name="UTS18"></a>Unicode Technical Standard #18, "Unicode Regular Expressions," Version 17, by Mark Davis and Andy Heninger.<br>
+	  <a href="http://www.unicode.org/reports/tr18/tr18-17.html">http://www.unicode.org/reports/tr18/tr18-17.html</a></p>
+
+      <p><small>Copyright © 2010, 2015 Michael D. Brazier, All Rights Reserved.</small></p>
+   </body>
+</html>

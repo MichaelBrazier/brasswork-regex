@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrassworkRegex", "BrassworkRegex\BrassworkRegex.csproj", "{0E9A09DA-A9FF-4B31-9ACC-FA1878E78E76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrassworkRegexTest", "BrassworkRegexTest\BrassworkRegexTest.csproj", "{0711695C-E6F5-445E-AAAE-DD8D62AE788F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4A734D1E-EAD7-4E15-957A-485657791765}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\apiref.html = Docs\apiref.html
+		Docs\gpl.txt = Docs\gpl.txt
+		Docs\index.html = Docs\index.html
+		Docs\lgpl.txt = Docs\lgpl.txt
+		Docs\manual.css = Docs\manual.css
+		Docs\syntax.html = Docs\syntax.html
+		Docs\tables.html = Docs\tables.html
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegexBenchmark", "RegexBenchmark\RegexBenchmark.csproj", "{DCDBC99D-647F-42BA-9A1B-A9A23414F36B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0E9A09DA-A9FF-4B31-9ACC-FA1878E78E76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E9A09DA-A9FF-4B31-9ACC-FA1878E78E76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E9A09DA-A9FF-4B31-9ACC-FA1878E78E76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E9A09DA-A9FF-4B31-9ACC-FA1878E78E76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0711695C-E6F5-445E-AAAE-DD8D62AE788F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0711695C-E6F5-445E-AAAE-DD8D62AE788F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0711695C-E6F5-445E-AAAE-DD8D62AE788F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0711695C-E6F5-445E-AAAE-DD8D62AE788F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCDBC99D-647F-42BA-9A1B-A9A23414F36B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCDBC99D-647F-42BA-9A1B-A9A23414F36B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCDBC99D-647F-42BA-9A1B-A9A23414F36B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCDBC99D-647F-42BA-9A1B-A9A23414F36B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+EndGlobal

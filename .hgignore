@@ -1,0 +1,9 @@
+syntax: glob
+Backup/*
+BrassworkRegex/bin/*
+BrassworkRegex/obj/*
+BrassworkRegexTest/bin/*
+BrassworkRegexTest/obj/*
+INSTRUMENTED/*
+RegexBenchmark/bin/*
+RegexBenchmark/obj/*

@@ -1,0 +1,1032 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>Regular Expression Classes</title>
+      <link rel="stylesheet" type="text/css" href="manual.css">
+   </head>
+   <body>
+      <ul id="toc">
+         <h1>Brasswork Regex<br/>User's Manual</h1>
+	     <a href="index.html">Top</a>
+         <li><b>Regular Expression API</b>
+            <ul>
+               <li><a href="#Regex">Regex Class</a></li>
+               <li><a href="#MatchEvaluator">MatchEvaluator Delegate</a></li>
+               <li><a href="#RegexOptions">RegexOptions Enumeration</a></li>
+               <li><a href="#Match">Match Class</a></li>
+               <li><a href="#MatchCollection">MatchCollection Class</a></li>
+               <li><a href="#MatchEnumerator">MatchCollection.Enumerator Class</a></li>
+               <li><a href="#Match.Group">Match.Group Class</a></li>
+               <li><a href="#Match.GroupCollection">Match.GroupCollection Class</a></li>
+               <li><a href="#Match.GroupEnumerator">Match.GroupCollection.Enumerator Class</a></li>
+            </ul>
+         </li>
+         <li><a href="syntax.html">Regular Expression Syntax</a>
+            <ul>
+               <li><a href="syntax.html#charesc">Characters and Character Escapes</a></li>
+               <li><a href="syntax.html#charclass">Character Classes</a></li>
+               <li><a href="syntax.html#boundaries">Boundaries</a></li>
+               <li><a href="syntax.html#grouping">Operators and Grouping</a></li>
+               <li><a href="syntax.html#quants">Quantifiers</a></li>
+               <li><a href="syntax.html#misc">Miscellaneous Constructs</a></li>
+            </ul>
+         </li>
+         <li><a href="tables.html">Tables of Unicode Properties</a>
+            <ul>
+               <li><a href="tables.html#properties">Unicode Properties</a></li>
+               <li><a href="tables.html#categories">General Categories</a></li>
+               <li><a href="tables.html#blocks">Named Blocks</a></li>
+               <li><a href="tables.html#scripts">Scripts</a></li>
+            </ul>
+         </li>
+      </ul>
+
+      <h2>Regular Expression Classes</h2>
+      <p>This section documents the Brassworks Regex API. Method calls are given in C# syntax.</p>
+
+      <h2><a name="Regex"></a>Regex Class</h2>
+      <p>Represents a regular expression.</p>
+
+      <h3>Constructors</h3>
+
+      <pre><a name="Regex_string"></a>Regex(string <i>rep</i>);</pre>
+	  <p>Initializes and compiles a regular expression, with the default options.</p>
+      <table>
+         <caption>Parameters</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>rep</i></td>
+               <td>System.String</td>
+               <td>The pattern to be compiled.</td>
+            </tr>
+         </tbody>
+      </table>
+      <table>
+         <caption>Exceptions</caption>
+         <thead>
+            <tr>
+               <td>Type</td>
+               <td>Thrown when</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>
+                  <type>ArgumentException</type>
+               </td>
+               <td><i>rep</i> is an ill-formed pattern.</td>
+            </tr>
+         </tbody>
+      </table>
+
+	  <pre><a name="Regex_string_string"></a>Regex(string <i>rep</i>, string <i>options</i>);</pre>
+	  <p>Initializes and compiles a regular expression, with the specified options.</p>
+      <table>
+         <caption>Parameters</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>rep</i></td>
+               <td>System.String</td>
+               <td>The pattern to be compiled.</td>
+            </tr>
+            <tr>
+               <td><i>options</i></td>
+               <td>System.String</td>
+               <td>A list of <a href="#RegexOptions">character codes</a> for options.</td>
+            </tr>
+         </tbody>
+      </table>
+      <table>
+         <caption>Exceptions</caption>
+         <thead>
+            <tr>
+               <td>Type</td>
+               <td>Thrown when</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>
+                  <type>ArgumentException</type>
+               </td>
+               <td><i>rep</i> is an ill-formed pattern.</td>
+            </tr>
+            <tr>
+               <td>
+                  <type>ArgumentOutOfRangeException</type>
+               </td>
+               <td><i>options</i> contains an invalid character code.</td>
+            </tr>
+         </tbody>
+      </table>
+
+	  <pre><a name="Regex_string_RegexOptions"></a>Regex(string <i>rep</i>, RegexOptions <i>options</i>);</pre>
+	  <p>Initializes and compiles a regular expression, with the specified options.</p>
+      <table>
+         <caption>Parameters</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>rep</i></td>
+               <td>System.String</td>
+               <td>The pattern to be compiled.</td>
+            </tr>
+            <tr>
+               <td><i>options</i></td>
+               <td><a href="#RegexOptions">RegexOptions</a></td>
+               <td>A set of flags specifying options.</td>
+            </tr>
+         </tbody>
+      </table>
+      <table>
+         <caption>Exceptions</caption>
+         <thead>
+            <tr>
+               <td>Type</td>
+               <td>Thrown when</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>
+                  <type>ArgumentException</type>
+               </td>
+               <td><i>rep</i> is an ill-formed pattern.</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h3>Properties</h3>
+      <ul>
+         <li><a href="#Regex_Options">Options</a></li>
+         <li><a href="#Regex_GroupNames">GroupNames</a></li>
+      </ul>
+
+      <h4><a name="Regex_Options"></a>Options</h4>
+	  <pre>string Options { get; }</pre>
+	  <p>The character codes for the <a href="#RegexOptions">RegexOptions</a> the regular expression was compiled with.</p>
+
+      <h4><a name="Regex_GroupNames"></a>GroupNames</h4>
+	  <pre>string[] GroupNames { get; }</pre>
+	  <p>Gets the names of the regular expression's capturing groups.</p>
+      <p>Capturing groups that aren't named in the pattern (being marked with <kbd>(+</kbd>...<kbd>)</kbd> are named with the decimal representation of their number; group 0 (equal to the whole match) is named "0", group 1 is named "1", etc. The names appear in the numerical order of the groups.</p>
+
+      <h3>Methods</h3>
+      <ul>
+         <li><a href="#Regex_ToString">ToString</a></li>
+         <li><a href="#Regex_IsOption">IsOption</a></li>
+         <li><a href="#Regex_Match">Match</a></li>
+         <li><a href="#Regex_Matches">Matches</a></li>
+         <li><a href="#Regex_Split">Split</a></li>
+         <li><a href="#Regex_Replace_string">Replace</a> (replacement pattern)</li>
+         <li><a href="#Regex_Replace_delegate">Replace</a> (delegate)</li>
+      </ul>
+
+      <h4><a name="Regex_ToString"></a>ToString</h4>
+	  <pre>string ToString();</pre>
+	  <p>Gets the pattern from which the regular expression was compiled.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><b>Returns</b></td>
+               <td>System.String</td>
+               <td>The original pattern passed to the constructor.</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h4><a name="Regex_IsOption"></a>IsOption</h4>
+	  <pre>bool IsOption(RegexOptions <i>opt</i>);</pre>
+	  <p>Tests whether the regular expression was compiled with the options set in <i>opt</i>.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>opt</i></td>
+               <td><a href="#RegexOptions">RegexOptions</a></td>
+               <td>A set of flags specifying options.</td>
+            </tr>
+            <tr>
+               <td><b>Returns</b></td>
+               <td>System.Boolean</td>
+               <td><b>true</b> if the regular expression was compiled with all the options in <i>opt</i>; otherwise <b>false</b>.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h4><a name="Regex_Match"></a>Match</h4>
+	  <pre>Match Match(string <i>text</i>);
+Match Match(string <i>text</i>, int <i>begin</i>);</pre>
+	  <p>Searches <i>text</i> for an occurrence of the regular expression.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>text</i></td>
+               <td>System.String</td>
+               <td>The text to be searched.</td>
+            </tr>
+            <tr>
+               <td><i>begin</i></td>
+               <td>System.Int32</td>
+               <td>The position to start searching from. Set to 0 if omitted.</td>
+            </tr>
+            <tr>
+               <td><b>Returns</b></td>
+               <td><a href="#Match">Match</a></td>
+               <td>A Match object, representing the first occurrence of text matching the regular expression in <i>text</i>, after the position <i>begin</i>.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h4><a name="Regex_Matches"></a>Matches</h4>
+	  <pre>Match[] Matches(string <i>text</i>);
+Match[] Matches(string <i>text</i>, int <i>begin</i>);</pre>
+	  <p>Searches <i>text</i> for every occurrence of the regular expression.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>text</i></td>
+               <td>System.String</td>
+               <td>The text to be searched.</td>
+            </tr>
+            <tr>
+               <td><i>begin</i></td>
+               <td>System.Int32</td>
+               <td>The position to start searching from. Set to 0 if omitted.</td>
+            </tr>
+            <tr>
+               <td><b>Returns</b></td>
+               <td><a href="#MatchCollection">MatchCollection</a></td>
+               <td>An enumerable collection of Match objects, representing all the occurrences of text matching the regular expression in <i>text</i> after the position <i>begin</i>.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h4><a name="Regex_Split"></a>Split</h4>
+	  <pre>string[] Split(string <i>text</i>);
+string[] Split(string <i>text</i>, int <i>limit</i>);
+string[] split(string <i>text</i>, int <i>limit</i>, int <i>begin</i>);</pre>
+	  <p>Splits <i>text</i> into substrings delimited by occurrences of the regular expression.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>text</i></td>
+               <td>System.String</td>
+               <td>The text to be split.</td>
+            </tr>
+            <tr>
+               <td><i>limit</i></td>
+               <td>System.Int32</td>
+               <td>The maximum number of times to split <i>text</i>. If omitted, or set to a negative number, <i>text</i> is split at every match of the regular expression.</td>
+            </tr>
+            <tr>
+               <td><i>begin</i></td>
+               <td>System.Int32</td>
+               <td>The position to start searching from. Set to 0 if omitted.</td>
+            </tr>
+            <tr>
+               <td><b>Returns</b></td>
+               <td>System.String[]</td>
+               <td>The split substrings of <i>text</i>.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <p><kbd>Split(string <i>text</i>)</kbd> splits <i>text</i> at every match of the regular expression.  If there are no matches in <i>text</i>, the method returns a one-element array containing a copy of <i>text</i>.  If the regular expression matches the empty string, the method splits <i>text</i> at every position, returning an array of one-element strings.</p>
+      <p><kbd>Split(<i>text</i>, <i>limit</i>)</kbd> works like <kbd>Split(string <i>text</i>)</kbd>, except that it splits <i>text</i> into no more than <i>limit</i> substrings. Searching stops after <i>limit</i> - 1 matches; all the characters of <i>text</i> after the last match are included in the last string of the returned array.</p>
+      <p><kbd>Split(<i>text</i>, <i>limit</i>, <i>begin</i>)</kbd> works like <kbd>Split(<i>text</i>, <i>limit</i>)</kbd>, except that it starts searching for occurrences at the position <i>begin</i>. All the characters before <i>begin</i> are included in the first string of the returned array, with the characters between <i>begin</i> and the first match. If you wish to split on every occurrence after a given position, set <i>limit</i> to a negative number.</p>
+      <p>Usually the text matched by the regular expression does not appear in the array returned.  However, if the expression contains capturing groups, the substrings captured from each match are included in the array returned, between the substrings delimited by the match.</p>
+
+      <h4><a name="Regex_Replace_string"></a>Replace (replacement pattern)</h4>
+	  <pre>string Replace(string <i>text</i>, string <i>pattern</i>);
+string Replace(string <i>text</i>, string <i>pattern</i>, int <i>times</i>);
+string Replace(string <i>text</i>, string <i>pattern</i>, int <i>times</i>, int <i>begin</i>);</pre>
+	  <p>Replaces all occurrences of the regular expression in <i>text</i> as specified by the replacement pattern <i>pattern</i>.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>text</i></td>
+               <td>System.String</td>
+               <td>The text to be searched.</td>
+            </tr>
+            <tr>
+               <td><i>pattern</i></td>
+               <td>System.String</td>
+               <td>A <a href="../syntax/replacement.html">replacement pattern</a>.</td>
+            </tr>
+            <tr>
+               <td><i>times</i></td>
+               <td>System.Int32</td>
+               <td>The maximum number of occurrences to replace. If omitted, or set to a negative number, all occurrences are replaced.</td>
+            </tr>
+            <tr>
+               <td><i>begin</i></td>
+               <td>System.Int32</td>
+               <td>The position to start searching from. Set to 0 if omitted.</td>
+            </tr>
+            <tr>
+               <td><b>Returns</b></td>
+               <td>System.String</td>
+               <td>A copy of <i>text</i>, except that the first <i>times</i> occurrences of the regular expression after the position <i>begin</i> has been replaced as specified by <i>pattern</i>.</td>
+            </tr>
+         </tbody>
+      </table>
+      <table>
+         <caption>Exceptions</caption>
+         <thead>
+            <tr>
+               <td>Type</td>
+               <td>Thrown when</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>
+                  <type>FormatException</type>
+               </td>
+               <td><i>pattern</i> contains an invalid substitution sequence.
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  <type>ArgumentOutOfRangeException</type>
+               </td>
+               <td><i>pattern</i> refers to a non-existent capturing group.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+
+      <p><kbd>Replace(<i>text</i>, <i>pattern</i>)</kbd> accepts strings, called <i>replacement patterns</i>, that specify what strings to replace a match with in their input. Most characters in a replacement pattern stand for themselves, and are copied verbatim to the output string. However, some sequences starting with a <kbd>$</kbd> are interpreted as instructions to copy data from the current match:</p>
+      <table>
+         <thead>
+            <tr>
+               <td>Sequence</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td class="cen"><kbd>$$</kbd></td>
+               <td>Copies a literal <kbd>$</kbd> to the output string.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>$&amp;</kbd></td>
+               <td>Substitutes the matched text.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>$`</kbd></td>
+               <td>Substitutes the part of the search text before the match.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>$'</kbd></td>
+               <td>Substitutes the part of the search text after the match.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>$_</kbd></td>
+               <td>Substitutes all of the search text.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>$<i>num</i></kbd></td>
+               <td>Substitutes the text captured by group <i>num</i>. (<kbd>$0</kbd> is equivalent to <kbd>$&amp;</kbd>.)
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>${<i>name</i>}</kbd></td>
+               <td>Substitutes the text captured by the group named <i>name</i>.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h4><a name="Regex_Replace_delegate"></a>Replace (delegate)</h4>
+	  <pre>string Replace(string <i>text</i>, MatchEvaluator <i>eval</i>);
+string Replace(string <i>text</i>, MatchEvaluator <i>eval</i>, int <i>times</i>);
+string Replace(string <i>text</i>, MatchEvaluator <i>eval</i>, int <i>times</i>, int <i>begin</i>);</pre>
+	  <p>Replaces all occurrences of the regular expression in <i>text</i> with a string returned from the delegate <i>eval</i>.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>text</i></td>
+               <td>System.String</td>
+               <td>The text to be searched.</td>
+            </tr>
+            <tr>
+               <td><i>eval</i></td>
+               <td><a href="#MatchEvaluator">MatchEvaluator</a></td>
+               <td>Delegate to a method that processes a match.</td>
+            </tr>
+            <tr>
+               <td><i>times</i></td>
+               <td>System.Int32</td>
+               <td>The maximum number of occurrences to replace. If omitted, or set to a negative number, all occurrences are replaced.</td>
+            </tr>
+            <tr>
+               <td><i>begin</i></td>
+               <td>System.Int32</td>
+               <td>The position to start searching from. Set to 0 if omitted.</td>
+            </tr>
+            <tr>
+               <td><b>Returns</b></td>
+               <td>System.String</td>
+               <td>A copy of <i>text</i>, except that the first <i>times</i> occurrences of the regular expression after the position <i>begin</i> have been replaced by the result of calling <i>eval</i> on that occurrence.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h2><a name="MatchEvaluator"></a>MatchEvaluator Delegate</h2>
+	  <pre>delegate string MatchEvaluator(Match <i>m</i>);</pre>
+	  <p>A delegate to be called each time <kbd>Regex.<a href="Regex_Replace_delegate">Replace(<i>text</i>, <i>eval</i>)</kbd></a> finds a match in an input string.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>m</i></td>
+               <td><a href="#Match">Match</a></td>
+               <td>A Match object representing the occurrence of a regular expression in a string.</td>
+            </tr>
+            <tr>
+               <td><b>Returns</b></td>
+               <td>System.String</td>
+               <td>The string to substitute for the occurrence.</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h2><a name="RegexOptions"></a>RegexOptions Enumeration</h2>
+      <p>You can modify how a regular expression is parsed and choose the algorithm used to match it by setting options. There are two ways to set most options: for the overall expression, by passing a combination of the RegexOptions enumerated values; and within an expression, with the <a href="syntax.html#misc">mode modifier</a> construct. Options with an uppercase character code can't be set with a mode modifier.</p>
+	  <p>The enumerated values, and their inline codes, are:</p>
+      <table>
+         <thead>
+            <tr>
+               <td>Value</td>
+               <td>Inline Code</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><code>None</code></td>
+               <td>n/a</td>
+               <td>The default: no options set.</td>
+            </tr>
+            <tr>
+               <td><a name="RegexOptions_b"></a><code>SimpleWordBreak</code></td>
+               <td class="cen"><kbd>b</kbd></td>
+               <td>Simple word boundaries: <kbd>\b</kbd> matches at positions between a character in <kbd>\w</kbd> and a character in <kbd>\W</kbd>.</td>
+            </tr>
+            <tr>
+               <td><a name="RegexOptions_i"></a><code>IgnoreCase</code></td>
+               <td class="cen"><kbd>i</kbd></td>
+               <td>Case-insensitive matching.</td>
+            </tr>
+            <tr>
+               <td><a name="RegexOptions_m"></a><code>Multiline</code></td>
+               <td class="cen"><kbd>m</kbd></td>
+               <td>Multiline mode: <kbd>^</kbd> and <kbd>$</kbd> succeed at the start and end of a line, not just at the start and end of a string.</td>
+            </tr>
+            <tr>
+               <td><a name="RegexOptions_s"></a><code>DotAll</code></td>
+               <td class="cen"><kbd>s</kbd></td>
+               <td>Single-line mode: <kbd>.</kbd> matches all characters, including newlines.</td>
+            </tr>
+            <tr>
+               <td><code>FreeSpacing</code></td>
+               <td class="cen"><kbd>x</kbd></td>
+               <td>Free-spacing mode: Un-escaped whitespace characters outside a character class, and text from a <kbd>#</kbd> to the end of the line, become comments; the parser ignores them.</td>
+            </tr>
+            <tr>
+               <td><a name="RegexOptions_A"></a><code>Anchored</code></td>
+               <td class="cen"><kbd>A</kbd></td>
+               <td>Requires the match to succeed starting at the initial position. By default, if a regular expression does not match at the first position tried, the engine scans the text to the right of that position until it finds a match or runs out of text.  Setting this option prevents that motion.</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h2><a name="Match"></a>Match Class</h2>
+      <p>Represents one occurrence of a regular expression in a string.</p>
+
+      <h3>Properties</h3>
+      <ul>
+         <li><a href="#Match_Text">Text</a></li>
+         <li><a href="#Match_Anchored">Anchored</a></li>
+         <li><a href="#Match_IsSuccess">IsSuccess</a></li>
+         <li><a href="#Match_Start">Start</a></li>
+         <li><a href="#Match_Length">Length</a></li>
+         <li><a href="#Match_Value">Value</a></li>
+         <li><a href="#Match_Groups">Groups</a></li>
+      </ul>
+
+      <h4><a name="Match_Text"></a>Text</h4>
+      <pre>string Text { get; }</pre>
+	  <p>The string searched to produce this match.</p>
+
+      <h4><a name="Match_Anchored"></a>Anchored</h4>
+      <pre>bool Anchored { get; }</pre>
+	  <p>Indicates whether the match is anchored to its starting point.</p>
+
+      <h4><a name="Match_IsSuccess"></a>IsSuccess</h4>
+      <pre>bool IsSuccess { get; }</pre>
+	  <p><b>true</b> if the match was successful; <b>false</b> if the text searched contains no occurrences of the regular expression.</p>
+
+      <h4><a name="Match_Start"></a>Start</h4>
+      <pre>int Start { get; }</pre>
+	  <p>The position in the text searched where the match begins.</p>
+
+      <h4><a name="Match_Length"></a>Length</h4>
+      <pre>int Length { get; }</pre>
+	  <p>The length of the matched substring.</p>
+
+      <h4><a name="Match_Value"></a>Value</h4>
+      <pre>string Value { get; }</pre>
+	  <p>The matched substring.</p>
+
+      <h4><a name="Match_Groups"></a>Groups</h4>
+      <pre><a href="#GroupCollection">GroupCollection</a> Value { get; }</pre>
+	  <p>A collection of substrings captured by groups in the regular expression.</p>
+
+      <h3>Methods</h3>
+      <ul>
+         <li><a href="#Match_ToString">ToString</a></li>
+         <li><a href="#Match_NextMatch">FindNext</a></li>
+      </ul>
+
+      <h4><a name="Match_ToString">ToString</a></h4>
+	  <pre>string ToString();</pre>
+	  <p>Gets the substring captured by the match.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><b>Returns</b></td>
+               <td>System.String</td>
+               <td>The substring captured by the match.</td>
+            </tr>
+         </tbody>
+      </table>
+      <table>
+         <caption>Exceptions</caption>
+         <thead>
+            <tr>
+               <td>Type</td>
+               <td>Thrown when</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>
+                  <type>InvalidOperationException</type>
+               </td>
+               <td>The match did not succeed.</td>
+            </tr>
+         </tbody>
+      </table>
+      <p><kbd>ToString()</kbd> returns the same string as <kbd><a href="#Match_Value">Value</a></kbd>.</p>
+
+      <h4><a name="Match_FindNext"></a>FindNext</h4>
+	  <pre>Match FindNext();</pre>
+	  <p>Searches the input string for another occurrence of the regular expression, starting at the next character after this match.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><b>Returns</b></td>
+               <td><a href="#Match">Match</a></td>
+               <td>A Match object, representing the next occurrence of the regular expression after the end of this occurrence.</td>
+            </tr>
+         </tbody>
+      </table>
+      <table>
+         <caption>Exceptions</caption>
+         <thead>
+            <tr>
+               <td>Type</td>
+               <td>Thrown when</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>
+                  <type>InvalidOperationException</type>
+               </td>
+               <td>The match did not succeed (<a href="#Match_IsSuccess">IsSuccess</a> is <kbd>false</kbd>).</td>
+            </tr>
+         </tbody>
+      </table>
+      <p>If the current match is the empty string, <kbd>FindNext()</kbd> begins searching one character to the right of the current match, to ensure that calling <kbd>FindNext()</kbd> repeatedly cannot get stuck in an infinite loop.</p>
+
+      <h2><a name="MatchCollection"></a>MatchCollection Class</h2>
+      <p>A collection of all occurrences of a regular expression in a string. It implements the System.Collections.Generic.IEnumerable&lt;<a href="#Match">Match</a>&gt; interface,  so it can be enumerated in a <kbd>foreach</kbd> loop. Instances of the class are returned by <kbd>Regex.<a href=#Regex_Matches">Matches()</a></kbd>; Match objects can be extracted with a <a href="#MatchEnumerator">MatchCollection.Enumerator</a>.</p>
+
+      <h3>Methods</h3>
+      <ul>
+         <li><a href="#MatchCollection_GetEnumerator">GetEnumerator</a></li>
+      </ul>
+
+      <h4><a name="MatchCollection_GetEnumerator"></a>GetEnumerator</h4>
+	  <pre>System.Collections.Generic.IEnumerator&lt;Match&gt; GetEnumerator();</pre>
+	  <p>Returns an enumerator that can iterate over the collection. Implements <kbd>IEnumerable&lt;Match&gt;.GetEnumerator()</kbd>.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><b>Returns</b></td>
+               <td><a href="#MatchEnumerator">MatchCollection.Enumerator</a></td>
+               <td>An enumerator for the collection.</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h2><a name="MatchEnumerator"></a>MatchCollection.Enumerator Class</h2>
+	  <p>Enumerates a <a href="#MatchCollection">MatchCollection</a>.</p>
+
+      <h3>Constructor</h3>
+
+      <pre><a name="MatchEnumerator_MatchCollection"></a>Enumerator(MatchCollection matches);</pre>
+      <table>
+         <caption>Parameters</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>rep</i></td>
+               <td><a href="#MatchCollection">MatchCollection</a></td>
+               <td>The collection to enumerate.</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h3>Properties</h3>
+      <ul>
+         <li><a href="#MatchEnumerator_Current">Current</a></li>
+      </ul>
+
+      <h4><a name="MatchEnumerator_Current"></a>Current</h4>
+      <pre><a href="#Match">Match</a> Current { get; }</pre>
+	  <p>The current match. Equals<kbd>null</kbd> before <a href="#MatchEnumerator_MoveNext">MoveNext</a> has been called, or if it fails to find a match.</p>
+
+      <h3>Methods</h3>
+      <ul>
+         <li><a href="#MatchEnumerator_MoveNext">MoveNext</a></li>
+      </ul>
+
+      <h4><a name="MatchEnumerator_MoveNext"></a>MoveNext</h4>
+	  <pre>bool MoveNext();</pre>
+	  <p>Finds the next match.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><b>Returns</b></td>
+               <td>System.Boolean</td>
+               <td><kbd>true</kbd> if the search for a match was successful, otherwise <kbd>false</kbd>.</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h2><a name="Match.Group"></a>Match.Group Class</h2>
+      <p>Represents one of a <a href="#Match">Match</a> object's capturing groups.</p>
+
+      <h3>Properties</h3>
+      <ul>
+         <li><a href="#Match.Group_Name">Name</a></li>
+         <li><a href="#Match.Group_Start">Start</a></li>
+         <li><a href="#Match.Group_Length">Length</a></li>
+         <li><a href="#Match.Group_Value">Value</a></li>
+      </ul>
+
+      <h4><a name="Match.Group_Name"></a>Name</h4>
+      <pre><a name="name"></a>string Name { get; }</pre>
+	  <p>The name of the group.</p>
+
+      <h4><a name="Match.Group_Start"></a>Start</h4>
+	  <pre>int Start { get; }</pre>
+	  <p>The position in the text searched where the captured substring begins.</p>
+
+      <h4><a name="Match.Group_Length"></a>Length</h4>
+      <pre>int Length { get; }</pre>
+	  <p>The length of the captured substring.</p>
+
+      <h4><a name="Match.Group_Value"></a>Value</h4>
+      <pre>string Value { get; } </pre>
+	  <p>The substring captured by the group. Equals <kbd>null</kbd> if the group did not participate in the match.</p>
+
+      <h3>Methods</h3>
+      <ul>
+         <li><code>string <a href="#ToString">ToString</a>();</code></li>
+      </ul>
+
+      <pre><a name="ToString"></a>string ToString();</pre><p>Gets the substring captured by the group.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><b>Returns</b></td>
+               <td>System.String</td>
+               <td>The substring captured by the group. Equals <kbd>null</kbd> if the group did not participate in the match.</td>
+            </tr>
+         </tbody>
+      </table>
+      <p><kbd>ToString()</kbd> returns the same string as <kbd><a href="#Match.Group_Value">Value</a></kbd>.</p>
+
+      <h2><a name="Match.GroupCollection"></a>GroupCollection Class</h2>
+      <p>Collects all the capturing groups of a <a href="#Match">Match</a> object. The first group in the collection holds the whole string matched - Match.<a href="#Match_Groups">Groups</a>[0].<a href="#Group_Value">Value</a> and Match.<a href="#Match_Value">Value</a> are equal.
+      </p>
+      <p>GroupCollection implements the System.Collections.Generic.IEnumerable&lt;Match.Group&gt; interface.</p>
+
+      <h3>Properties</h3>
+      <ul>
+         <li><a href="#Match.GroupCollection_Count">Count</a></li>
+      </ul>
+
+      <h4><a name="Match.GroupCollection_Count"></a>Count</h4>
+      <pre><a name="name"></a>int Count { get; }</pre>
+	  <p>The number of capturing groups in the regex, counting the whole match as a group.</p>
+
+      <h3>Methods</h3>
+      <ul>
+         <li><a href="#Match.GroupCollection_GetEnumerator">GetEnumerator</a></li>
+         <li><a href="#Match.GroupCollection_Item_int">Item[int]</a></li>
+         <li><a href="#Match.GroupCollection_Item_string">Item[string]</a></li>
+      </ul>
+
+      <h4><a name="Match.GroupCollection_GetEnumerator">GetEnumerator</a></h4>
+	  <pre>System.Collections.Generic.IEnumerator GetEnumerator();</pre>
+	  <p>An enumerator for the capturing groups of a match.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><b>Returns</b></td>
+               <td><a href="#Match.GroupEnumerator">Match.GroupCollection.Enumerator</a></td>
+               <td>An enumerator for the capturing groups of a match.</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h4><a name="Match.GroupCollection_Item_int"></a>Item[int]</h4>
+	  <pre>Group Item[int <i>index</i>] { get; } </pre>
+	  <p>The group with the specified index. This is an indexed property; in C# code it's normally called as <kbd>Match.<a href="#Match_Groups">Groups</a>[index]</kbd>.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>index</i></td>
+               <td>System.Int32</td>
+               <td>The index of the group to retrieve.</td>
+            </tr>
+            <tr>
+               <td><b>Returns</b></td>
+               <td><a href="#Match.Group">Group</a></td>
+               <td>Group <i>index</i> of the regular expression.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <table>
+         <caption>Exceptions</caption>
+         <thead>
+            <tr>
+               <td>Type</td>
+               <td>Thrown when</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>
+                  <type>ArgumentOutOfRangeException</type>
+               </td>
+               <td><i>g</i> is negative, or not less than the number of groups in the collection.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h4><a name="Match.GroupCollection_Item_string"></a>Item[string]</h4>
+      <pre>Group Item[string <i>name</i>] { get; } </pre>
+	  <p>The group with the specified name. This is an indexed property; in C# code it's normally called as <kbd>Match.<a href="#Match_Groups">Groups</a>[name]</kbd>.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><i>name</i></td>
+               <td>System.String</td>
+               <td>The name of the group to retrieve.</td>
+            </tr>
+            <tr>
+               <td><b>Returns</b></td>
+               <td><a href="#Match.Group">Group</a></td>
+               <td>The group named <i>name</i>.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <table>
+         <caption>Exceptions</caption>
+         <thead>
+            <tr>
+               <td>Type</td>
+               <td>Thrown when</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>
+                  <type>ArgumentOutOfRangeException</type>
+               </td>
+               <td>The collection does not contain a group named <i>name</i>.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h2><a name="Match.GroupEnumerator"></a>Match.GroupCollection.Enumerator Class</h2>
+      <p>An enumerator that iterates over a <a href="#Match.GroupCollection">GroupCollection</a>.</p>
+      <p>GroupCollection.Enumerator implements the System.Collections.Generic.IEnumerator&lt;Match.Group&gt; interface.</p>
+
+      <h3>Properties</h3>
+      <ul>
+         <li><a href="#Match.GroupEnumerator_Current">Current</a></li>
+      </ul>
+
+      <h4><a name="Match.GroupEnumerator_Current"></a>Current</h4>
+	  <pre><a href="#Match.Group">Match.Group</a> Current { get; } </pre>
+	  <p>The group the enumerator points to.</p>
+
+      <h3>Methods</h3>
+      <ul>
+         <li><a href="#Match.GroupEnumerator_MoveNext">MoveNext</a></li>
+      </ul>
+
+      <h4><a name="Match.GroupEnumerator_MoveNext">MoveNext</a></h4>
+	  <pre>bool MoveNext();</pre>
+	  <p>Advances to the next group.</p>
+      <table>
+         <caption>Parameters and Return Value</caption>
+         <thead>
+            <tr>
+               <td>Name</td>
+               <td>Type</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><b>Returns</b></td>
+               <td>System.Boolean</td>
+               <td><b>true</b> if the enumerator has moved beyond the last group; otherwise <b>false</b>.</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <p><small>Copyright © 2010, 2015 Michael D. Brazier, All Rights Reserved.</small></p>
+   </body>
+</html>

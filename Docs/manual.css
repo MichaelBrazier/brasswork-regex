@@ -1,0 +1,45 @@
+body {
+	font-family: Palatino Linotype, serif;
+	margin-left: 22em;
+}
+#toc {
+	position: fixed; top: 0; left: 0; bottom: 0; width: 20em;
+	margin: 0.5em; border: 2px #CD7F32 solid; background-color: #CFB53B;
+}
+#toc, #toc ul {
+	list-style-type: none;
+	padding-left: 1em;
+}
+p, table {
+	margin-left: 2em;
+}
+table {
+	border-collapse: collapse;
+	margin-bottom: 1ex;
+}
+table caption {
+	font-size: 105%;
+	text-align: left;
+	margin-bottom: 0.5ex;
+}
+thead {
+	background-color: #CFB53B;
+	border: 2px #CD7F32 solid;
+}
+tbody {
+	border: 2px #CD7F32 solid;
+}
+tr {
+	border: 1px #CD7F32 solid;
+}
+td, th {
+	text-align: left;
+	vertical-align: top;
+	padding: 0 5px;
+}
+td.cen {
+	text-align: center;
+}
+kbd, pre {
+	background-color: #E0E0E0;
+}

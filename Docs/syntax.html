@@ -1,0 +1,437 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+      <title>Regular Expression Syntax</title>
+      <link rel="stylesheet" type="text/css" href="manual.css">
+   </head>
+   <body>
+      <ul id="toc">
+         <h1>Brasswork Regex<br/>User's Manual</h1>
+	     <a href="index.html">Top</a>
+         <li><a href="apiref.html">Regular Expression API</a>
+            <ul>
+               <li><a href="apiref.html#Regex">Regex Class</a></li>
+               <li><a href="apiref.html#MatchEvaluator">MatchEvaluator Delegate</a></li>
+               <li><a href="apiref.html#RegexOptions">RegexOptions Enumeration</a></li>
+               <li><a href="apiref.html#Match">Match Class</a></li>
+               <li><a href="apiref.html#MatchCollection">MatchCollection Class</a></li>
+               <li><a href="apiref.html#MatchEnumerator">MatchCollection.Enumerator Class</a></li>
+               <li><a href="apiref.html#Match.Group">Match.Group Class</a></li>
+               <li><a href="apiref.html#Match.GroupCollection">Match.GroupCollection Class</a></li>
+               <li><a href="apiref.html#Match.GroupEnumerator">Match.GroupCollection.Enumerator Class</a></li>
+            </ul>
+		 </li>
+         <li><b>Regular Expression Syntax</b>
+            <ul>
+               <li><a href="#charesc">Characters and Character Escapes</a></li>
+               <li><a href="#charclass">Character Classes</a></li>
+               <li><a href="#boundaries">Boundaries</a></li>
+               <li><a href="#grouping">Operators and Grouping</a></li>
+               <li><a href="#quants">Quantifiers</a></li>
+               <li><a href="#misc">Miscellaneous Constructs</a></li>
+            </ul>
+         </li>
+         <li><a href="tables.html">Tables of Unicode Properties</a>
+            <ul>
+               <li><a href="tables.html#properties">Unicode Properties</a></li>
+               <li><a href="tables.html#categories">General Categories</a></li>
+               <li><a href="tables.html#blocks">Named Blocks</a></li>
+               <li><a href="tables.html#scripts">Scripts</a></li>
+            </ul>
+         </li>
+      </ul>
+      <h2>Regular Expression Syntax</h2>
+      <p>This section explains the syntax of regular expressions accepted by Brassworks Regex.</p>
+
+      <h2><a name="charesc"></a>Characters and Character Escapes</h2>
+      <p>Characters other than <kbd>. $ ^ { [ ( ) | & ~ * + ? \</kbd> match themselves. The escape character <kbd>\</kbd> signals that, if the next character is a metacharacter, the expression should match the literal character. If the next character is not a metacharacter, <kbd>\</kbd> begins an escape sequence.
+      </p>
+      <p>The escape sequences that match a single character are:</p>
+      <table>
+         <thead>
+            <tr>
+               <td>Escape Sequence</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td class="cen"><kbd>\a</kbd></td>
+               <td>Matches the alert (0x7).</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\b</kbd></td>
+               <td>Within a <a href="#charclass">character class</a>, matches a backspace (0x8).</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\e</kbd></td>
+               <td>Matches an escape (0x1b).</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\f</kbd></td>
+               <td>Matches a formfeed (0xc).</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\n</kbd></td>
+               <td>Matches a linefeed (0xa).</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\r</kbd></td>
+               <td>Matches a carriage return (0xd).</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\t</kbd></td>
+               <td>Matches a horizontal tab (0x9).</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\v</kbd></td>
+               <td>Matches a vertical tab (0xb).</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\c<i>alpha</i></kbd></td>
+               <td>When <i>alpha</i> is an ASCII letter, matches the ASCII control character CTRL-<i>alpha</i>; for instance, <kbd>\cC</kbd> and <kbd>\cc</kbd> both match CTRL-C.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\x{<i>hex</i>}</kbd></td>
+               <td>Matches the Unicode character with the hexadecimal representation <i>hex</i>.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\<i>whitespace</i></kbd></td>
+               <td>Matches <i>whitespace</i>, if <a href="../apiref/RegexOptions.html#x">free-spacing mode</a> has been set.</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h2><a name="charclass"></a>Character Classes</h2>
+      <p>A character class defines a set of characters, and matches a single character belonging to that set.  These constructs define character classes:</p>
+      <table>
+         <thead>
+            <tr>
+               <td>Character Class</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td class="cen"><kbd>[<i>char-group</i>]</kbd></td>
+               <td>Positive character group: matches any character in <i>char-group</i>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>[^<i>char-group</i>]</kbd></td>
+               <td>Negative character group: matches any character not in <i>char-group</i>.<br/>
+			   A leading <kbd>^</kbd> reverses the sense of a character group, telling the expression to match all characters except those in the group. A <kbd>^</kbd> elsewhere in a character group is not special.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\N</kbd></td>
+               <td>Matches a Unicode newline character. These are: <kbd>\u000A | \u000B | \u000C | \u000D | \u0085 | \u2028 | \u2029</kbd></td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>.</kbd></td>
+               <td>Matches any character that is not a Unicode newline. If <a href="apiref.html/#RegexOptions_s">single line mode</a> has been set, <kbd>.</kbd> matches any single character, including newlines.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\p{<i>name</i>}</kbd></td>
+               <td>Matches any character with the property specified by <i>name</i>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\P{<i>name</i>}</kbd></td>
+               <td>Matches any character not in <kbd>\p{<i>name</i>}</kbd>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\d</kbd></td>
+               <td>Matches any decimal digit; equivalent to <kbd>\p{<a href="tables.html#Nd">Nd</a>}</kbd>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\D</kbd></td>
+               <td>Matches any character not in <kbd>\d</kbd>; equivalent to <kbd>\P{<a href="tables.html#Nd">Nd</a>}</kbd>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\s</kbd></td>
+               <td>Matches any whitespace; equivalent to <kbd>[\f\n\r\t\v\x85\p{<a href="tables.html#Z">Z</a>}]</kbd>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\S</kbd></td>
+               <td>Matches any character not in <kbd>\s</kbd>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><a name="#charclass_w"></a><kbd>\w</kbd></td>
+               <td>Matches any word character; equivalent to <kbd>[\p{<a href="tables.html#Alpha">Alpha</a>}\p{<a href="tables.html#M">Mark</a>}\p{<a href="tables.html#Nd">Nd</a>}\p{<a href="tables.html#Pc">Pc</a>}]</kbd>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\W</kbd></td>
+               <td>Matches any character not in <kbd>\w</kbd>.</td>
+            </tr>
+         </tbody>
+      </table>
+	  <p>A character group may itself be one of the character classes above (allowing character classes to nest) or one of the following expressions:</p>
+	  <table>
+         <thead>
+            <tr>
+               <td>Character Group</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td class="cen"><kbd><i>character</i></kbd></td>
+               <td>Any single character matches itself, as it does outside a character class. However, most metacharacters lose their special meanings within character classes; only <kbd>[</kbd> and <kbd>]</kbd> must be escaped to match themselves.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd><i>character</i>-<i>character</i></kbd></td>
+               <td>A character range. A contiguous set of characters from the Unicode character set, specified by the first character in the set, followed by <kbd>-</kbd>, followed by the last character in the set; it matches any character lying between the two endpoints.<br/>
+			   If placed at the start of a character group, <kbd>-</kbd> will match itself. In any other position in a group, <kbd>-</kbd> is parsed as part of a range; the parser will throw an exception if what precedes and follows it are not single characters.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd><i>char-group</i><i>char-group</i></kbd></td>
+               <td>Two character groups concatenated together form an expression that matches if either one matches alone.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd><i>char-group</i>||<i>char-group</i></kbd></td>
+               <td>Union. Two character groups linked by <kbd>||</kbd> also form an expression that matches if either one matches alone. The difference between union and concatenation is precedence - concatenation binds more tightly than any operator, while <kbd>||</kbd> binds more loosely than <kbd>&&</kbd> or <kbd>--</kbd>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd><i>char-group</i>&&<i>char-group</i></kbd></td>
+               <td>Intersection. Two character groups linked by <kbd>&&</kbd> form an expression that matches only if both groups match. <kbd>&&</kbd> has a lower precedence than <kbd>--</kbd>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd><i>char-group</i>--<i>char-group</i></kbd></td>
+               <td>Subtraction. Two character groups linked by <kbd>--</kbd> form an expression that matches if the left group matches but the right group does not.</td>
+            </tr>
+         </tbody>
+	  </table>
+      <p>The Unicode <a href="tables.html#categories">general categories</a>, <a href="tables.html#blocks">named blocks</a> and <a href="tables.html#scripts">scripts</a> are properties recognized by Brasswork Regex. The engine also recognizes a small set of <a href="tables.html#properties">binary properties</a>. Whitespace and the underscore <kbd>_</kbd> are ignored in a property name, and the names are not case-sensitive; <kbd>decimal number</kbd>, <kbd>DECIMAL_NUMBER</kbd> and <kbd>DecimalNumber</kbd> all name the same property.</p>
+
+      <h2><a name="boundaries"></a>Boundaries</h2>
+      <p>These constructs do not match characters; instead they test the current position in the search text, and fail the match if the test fails.</p>
+      <table>
+         <thead>
+            <tr>
+               <td>Boundary</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td class="cen"><kbd>^</kbd></td>
+               <td>Succeeds if the current position is the start of the string.  If <a href="apiref.html/#RegexOptions_m">multi-line mode</a> is set, also succeeds if the current position is immediately after a Unicode newline.<br><kbd>^</kbd> and <kbd>$</kbd> will not match between the Windows newline sequence "\r\n".
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>$</kbd></td>
+               <td>Succeeds if the current position is the end of the string.  If <a href="apiref.html/#RegexOptions_m">multi-line mode</a> is set, also succeeds if the current position is immediately before a Unicode newline.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\b</kbd></td>
+               <td>Outside a <a href="#charclass">character class</a>, succeeds if the current position is a word boundary.<br/>
+			   If <a href="apiref.html/#RegexOptions_b">simple word break mode</a> is set, <kbd>\b</kbd> matches a simple word boundary: a position that separates a character matching <kbd><a href="#charclass_w">\w</a></kbd> from one matching <kbd>\W</kbd>. <kbd>\b</kbd> also succeeds at the start of the string if the first character matches <kbd>\w</kbd>, and at the end if the last character matches <kbd>\w</kbd>.<br/>
+			   If <a href="apiref.html/#RegexOptions_b">simple word break mode</a> is not set, <kbd>\b</kbd> matches a default word boundary: a position that separates words as defined by <a href="index.html#UAX29">UAX 29</a>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\b{A}</kbd></td>
+               <td>Succeeds if the current position is the start of the string. <a href="apiref.html/#RegexOptions_m">Multi-line mode</a> does not affect <kbd>\b{A}</kbd> and <kbd>\b{Z}</kbd>.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\b{Z}</kbd></td>
+               <td>Succeeds if the current position is the end of the string.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\b{a}</kbd></td>
+               <td>Succeeds if the current position is the start of a line. <a href="apiref.html/#RegexOptions_m">Multi-line mode</a> does not affect <kbd>\b{a}</kbd> and <kbd>\b{z}</kbd>.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\b{z}</kbd></td>
+               <td>Succeeds if the current position is the end of a line.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\b{w}</kbd></td>
+               <td>Succeeds if the current position is a simple word boundary. <a href="apiref.html/#RegexOptions_b">Simple word break mode</a> does not affect <kbd>\b{w}</kbd> or <kbd>\b{W}</kbd>.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\b{W}</kbd></td>
+               <td>Succeeds if the current position is a default word boundary.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\B</kbd>, <kbd>\B{<i>letter</i>}</kbd></td>
+               <td>Succeed exactly when <kbd>\b</kbd>/<kbd>\b{<i>letter</i>}</kbd> fail.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h2><a name="grouping"></a>Alternation and Grouping</h2>
+      <p>These constructs control the overall structure of regular expressions.</p>
+      <table>
+         <thead>
+            <tr>
+               <td>Expression</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td class="cen"><kbd><i>expression</i>|<i>expression</i></kbd></td>
+               <td>Alternation. Matches all strings that match either of the expressions it separates. Alternation has the lowest precedence of all the regular expression operators;
+                  for example, <kbd>ca|o|ut</kbd> matches "ca", "o", and "ut".</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd><i>expression</i>&amp;<i>expression</i></kbd></td>
+               <td>Intersection. Matches only strings that match both of the expressions it separates. Intersection has a precedence just above alternation.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd><i>expression</i>~<i>expression</i></kbd></td>
+               <td>Subtraction. Matches strings that match the expression on the left, but do <i>not</i> match the expression on the right. Subtraction has a precedence just above intersection.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>~<i>expression</i></kbd></td>
+               <td>Complement. Matches strings that do <i>not</i> match the expression on the right. Complement has the same precedence as subtraction.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>(<i>expression</i>)</kbd></td>
+               <td>Matches <i>expression</i>, without capturing. The main use of parentheses is defeating operator precedence; for example, <kbd>c(a|o|u)t</kbd> matches "cat", "cot", and "cut".<br/>
+			   Capturing groups may not appear in a complemented regular expression, or on the right side of a subtraction.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>(+<i>expression</i>)</kbd></td>
+               <td>Matches <i>expression</i>, and captures the matched text into an unnamed group. Capturing groups are numbered in the order they appear in the pattern from left to right, starting from 1; groups without a name are identified by their number. (Group 0 contains the string captured by the whole expression.)</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>({<i>name</i>}<i>expression</i>)</kbd></td>
+               <td>Matches <i>expression</i>, and captures the matched text into the group named <i>name</i>. It's legal to have two capturing constructs with the same name; in that case the group's number comes from the position of the leftmost group with the common name. Named capturing groups may also be identified by number.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>(?&gt;<i>expression</i>)</kbd></td>
+               <td>Matches <i>expression</i> atomically. Ordinarily, if there is more than one way to match a subexpression starting at a position, all the possible
+                  ways are considered. Using <kbd>(?&gt;<i>expression</i>)</kbd> changes this; the longest way found to match <i>expression</i> at a position is the only one considered, and all others are discarded.<br/>
+			   Atomic groups may not appear in a complemented regular expression, or on the right side of a subtraction.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>(?(<i>if</i>)<i>then</i>|<i>else</i>)</kbd></td>
+               <td>Conditional group. If the assertion <i>if</i> succeeds, matches <i>then</i>; otherwise, matches <i>else</i>.  No part of the construct is optional, but <i>then</i> or <i>else</i> may be left empty. <i>if</i> must be a <a href="#boundaries">boundary</a>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>(?{<i>name</i>}<i>then</i>|<i>else</i>)</kbd></td>
+               <td>Conditional group. If the capturing group <i>name</i> has matched a substring, matches <i>then</i>; otherwise, matches <i>else</i>.  No part of the construct is optional, but <i>then</i> or <i>else</i> may be left empty.</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h2><a name="quants"></a>Quantifiers</h2>
+      <p>A quantifier is an operator that applies to the character, character class, or group that immediately precedes it, and specifies
+         that its operand should be repeated some number of times. In this table, <i>n</i> and <i>m</i> are non-negative integers.
+      </p>
+      <table>
+         <thead>
+            <tr>
+               <td>Quantifier</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td class="cen"><kbd>{<i>n</i>}</kbd></td>
+               <td>Matches the operand exactly <i>n</i> times.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>{<i>n</i>,}</kbd></td>
+               <td>Matches the operand at least <i>n</i> times, preferring as many matches as possible.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>{<i>n</i>,<i>m</i>}</kbd></td>
+               <td>Matches the operand at least <i>n</i> times and at most <i>m</i> times, preferring as many matches as possible.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>{<i>n</i>,}?</kbd></td>
+               <td>Matches the operand at least <i>n</i> times, preferring as few matches as possible.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>{<i>n</i>,<i>m</i>}?</kbd></td>
+               <td>Matches the operand at least <i>n</i> times and at most <i>m</i> times, preferring as few matches as possible.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>?</kbd></td>
+               <td>Equivalent to <kbd>{0,1}</kbd>.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>*</kbd></td>
+               <td>Equivalent to <kbd>{0,}</kbd>.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>+</kbd></td>
+               <td>Equivalent to <kbd>{1,}</kbd>.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>??</kbd></td>
+               <td>Equivalent to <kbd>{0,1}?</kbd>.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>*?</kbd></td>
+               <td>Equivalent to <kbd>{0,}?</kbd>.
+               </td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>+?</kbd></td>
+               <td>Equivalent to <kbd>{1,}?</kbd>.
+               </td>
+            </tr>
+         </tbody>
+      </table>
+
+      <h2><a name="misc"></a>Miscellaneous Constructs</h2>
+      <p>These constructs don't fit into any of the other categories.</p>
+      <table>
+         <thead>
+            <tr>
+               <td>Construct</td>
+               <td>Description</td>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td class="cen"><kbd>\<i>num</i></kbd>, <kbd>\g<i>num</i></kbd></td>
+               <td>Backreference; matches a string identical to the one most recently matched by the capturing group number <i>num</i>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\g{<i>name</i>}</kbd></td>
+               <td>Named backreference; matches a string identical to the one most recently matched by the capturing group named <i>name</i>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\k</kbd></td>
+               <td>Trailing context. Any part of the expression after <kbd>\k</kbd> must be matched, but the substring it matches is not captured by the expression.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>\K</kbd></td>
+               <td>Leading context. Any part of the expression before <kbd>\K</kbd> must be matched, but the substring it matches is not captured by the expression.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>(?<i>([bimsx]*)(</i>-<i>[bimsx]+)?</i>)</kbd></td>
+               <td>Mode modifier. Sets the <a href="apiref.html/#RegexOptions">options</a> listed before the <kbd>-</kbd>, and clears the options listed after it.  The changed options apply to the end of the nearest enclosing group.<br/>
+			   Either set of options can be omitted, but one must be supplied. If the <kbd>-</kbd> appears, at least one option must be given after it.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>(?#<i>text</i>)</kbd></td>
+               <td>Inline comment. The parser ignores everything from the <kbd>(?#</kbd> to the next <kbd>)</kbd>.</td>
+            </tr>
+            <tr>
+               <td class="cen"><kbd>#<i>text</i></kbd></td>
+               <td>Inline comment, in <a href="apiref.html/#RegexOptions_x">free-spacing mode</a>.  The parser ignores everything from the <kbd>#</kbd> to the end of the current line.</td>
+            </tr>
+         </tbody>
+      </table>
+
+      <p><small>Copyright © 2010, 2015 Michael D. Brazier, All Rights Reserved.</small></p>
+   </body>
+</html>
